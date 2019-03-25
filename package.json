@@ -1,0 +1,25 @@
+{
+  "name": "es6-stopwatch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "watch": "babel src/script.js --watch --out-file script-compiled.js --source-maps",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bodeck/es6-stopwatch.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bodeck/es6-stopwatch/issues"
+  },
+  "homepage": "https://github.com/Bodeck/es6-stopwatch#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2"
+  }
+}
