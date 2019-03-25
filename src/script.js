@@ -52,6 +52,25 @@ class Stopwatch {
     clearInterval(this.watch);
   }
 
+  addResults() {
+    if (!this.running) return;
+    const resultsList = document.querySelector('.results');
+    const el = document.createElement('li');
+    el.innerText = this.format(this.times);
+    resultsList.appendChild(el);
+  }
+
+  clearResults() {
+    const resultsList = document.querySelector('.results');
+    resultsList.innerHTML = '';
+  }
+
+  clearWatch() {
+    this.stop();
+    this.reset();
+    this.print();
+    this.clearResults();
+  }
 }
 
 function pad0(value) {
@@ -70,3 +89,7 @@ let startButton = document.querySelector('#start');
 startButton.addEventListener('click', () => stopwatch.start());
 let stopButton = document.querySelector('#stop');
 stopButton.addEventListener('click', () => stopwatch.stop());
+let loopButton = document.querySelector('#loop');
+loopButton.addEventListener('click', () => stopwatch.addResults());
+let resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', () => stopwatch.clearWatch());
