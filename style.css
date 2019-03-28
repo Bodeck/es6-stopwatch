@@ -1,0 +1,32 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.stopwatch {
+  border: 3px solid;
+  background-color: rgb(156, 209, 158);
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 20px auto;
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.button {
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px 20px;
+  cursor: grab;
+  color: black;
+}

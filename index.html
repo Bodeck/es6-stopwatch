@@ -6,15 +6,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Timer!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="style.css">
 </head>
 
 <body>
-  <nav class="controls">
-    <a href="#" class="button" id="start">Start</a>
-    <a href="#" class="button" id="stop">Stop</a>
-  </nav>
-  <div class="stopwatch"></div>
+  <div class="container">
+    <nav class="controls">
+      <a href="#" class="button" id="start"><i class="fas fa-play"></i> Start</a>
+      <a href="#" class="button" id="stop"><i class="fas fa-pause"></i> Stop</a>
+      <a href="#" class="button" id="lap"><i class="fas fa-history"></i> Lap</a>
+    </nav>
+    <div class="stopwatch"></div>
+    <nav class="controls">
+      <a href="#" class="button" id="reset"><i class="fas fa-trash-alt"></i> Reset</a>
+    </nav>
+  </div>
   <ul class="results"></ul>
   <script type="text/javascript" src="script-compiled.js"></script>
 </body>
