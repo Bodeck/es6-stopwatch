@@ -1,6 +1,14 @@
-class Button extends React.Component {
-  constructor(props) {
+class ResultsList extends React.Component {
+  get results() {
+    return this.props.results.map((result, index) => <li key={index}>{result}</li>)
+  }
 
+  render() {
+    return (
+      <ul className='results'>
+        {this.results}
+      </ul>
+    )
   }
 }
 
@@ -9,11 +17,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       running: false,
-      times: {
-        minutes: 0,
-        seconds: 0,
-        miliseconds: 0
-      }
+      minutes: 0,
+      seconds: 0,
+      miliseconds: 0,
+      results: []
     }
   }
 
@@ -32,23 +39,31 @@ class App extends React.Component {
   }
 
   calculate() {
-    this.state.times.miliseconds++;
-    if (this.state.times.miliseconds >= 100) {
-      this.state.times.seconds++;
-      this.state.times.miliseconds = 0;
+    let mm = this.state.minutes;
+    let ss = this.state.seconds;
+    let ms = this.state.miliseconds;
+    ms++;
+
+    if (ms >= 100) {
+      ss++;
+      ms = 0;
     }
-    if (this.state.times.seconds >= 60) {
-      this.state.times.minutes++;
-      this.state.times.seconds = 0;
+    if (ss >= 60) {
+      mm++;
+      ss = 0;
     }
+    this.setState({
+      minutes: mm,
+      seconds: ss,
+      miliseconds: ms
+    })
   }
 
   print() {
-    return this.format(this.state.times);
-  }
-
-  format(times) {
-    return `${this.pad0(times.minutes)}:${this.pad0(times.seconds)}:${this.pad0(Math.floor(times.miliseconds))}`
+    const ms = this.state.miliseconds;
+    const ss = this.state.seconds;
+    const mm = this.state.minutes;
+    return `${this.pad0(mm)}:${this.pad0(ss)}:${this.pad0(ms)}`
   }
 
   pad0(value) {
@@ -60,33 +75,46 @@ class App extends React.Component {
   }
 
   stop() {
-    this.state.running = false;
+    this.setState({ running: false });
     clearInterval(this.props.watch);
   }
 
-  clearWatch() {
-    this.stop();
-    this.reset();
+  reset() {
+    this.setState({
+      running: false,
+      miliseconds: 0,
+      seconds: 0,
+      minutes: 0,
+      results: []
+    })
   }
 
-  reset() {
-    this.state.times.miliseconds = 0;
-    this.state.times.seconds = 0;
-    this.state.times.minutes = 0;
+  addResults() {
+    if (this.state.running) {
+      const arr = this.state.results;
+      const lap = this.print();
+      arr.push(lap);
+      this.setState({ results: arr });
+    }
   }
 
   render() {
-    return (<div className='container'>
-      <nav>
-        <a href="#" className="button" id="start" onClick={this.start = this.start.bind(this)}><i className="fas fa-play"></i> Start</a>
-        <a href="#" className="button" id="stop" onClick={this.stop = this.stop.bind(this)}><i className="fas fa-pause"></i> Stop</a>
-        <a href="#" className="button" id="lap" onClick={this.clearWatch = this.clearWatch.bind(this)}><i className="fas fa-history"></i> Lap</a>
-      </nav>
-      <div className="stopwatch">{this.print()}</div>
-      <nav className="controls">
-        <a href="#" className="button" id="reset"><i className="fas fa-trash-alt"></i> Reset</a>
-      </nav>
-    </div>)
+    return (
+      <div>
+        <div className='container'>
+          <nav>
+            <a href="#" className="button" id="start" onClick={() => this.start()}><i className="fas fa-play"></i> Start</a>
+            <a href="#" className="button" id="stop" onClick={() => this.stop()}><i className="fas fa-pause"></i> Stop</a>
+            <a href="#" className="button" id="lap" onClick={() => this.addResults()}><i className="fas fa-history"></i> Lap</a>
+          </nav>
+          <div className="stopwatch">{this.print()}</div>
+          <nav className="controls">
+            <a href="#" className="button" id="reset" onClick={() => this.reset()}><i className="fas fa-trash-alt"></i> Reset</a>
+          </nav>
+        </div>
+        <ResultsList results={this.state.results} />
+      </div>
+    )
   }
 }
 
