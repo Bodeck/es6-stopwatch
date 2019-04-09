@@ -1,5 +1,13 @@
 "use strict";
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -77,8 +85,10 @@ function (_React$Component2) {
       var _this2 = this;
 
       if (!this.state.running) {
-        this.state.running = true;
-        this.props.watch = setInterval(function () {
+        this.setState({
+          running: true
+        });
+        this.watch = setInterval(function () {
           return _this2.step();
         }, 10);
       }
@@ -93,34 +103,34 @@ function (_React$Component2) {
   }, {
     key: "calculate",
     value: function calculate() {
-      var mm = this.state.minutes;
-      var ss = this.state.seconds;
-      var ms = this.state.miliseconds;
-      ms++;
+      var minutes = this.state.minutes;
+      var seconds = this.state.seconds;
+      var miliseconds = this.state.miliseconds;
+      miliseconds++;
 
-      if (ms >= 100) {
-        ss++;
-        ms = 0;
+      if (miliseconds >= 100) {
+        seconds++;
+        miliseconds = 0;
       }
 
-      if (ss >= 60) {
-        mm++;
-        ss = 0;
+      if (seconds >= 60) {
+        minutes++;
+        seconds = 0;
       }
 
       this.setState({
-        minutes: mm,
-        seconds: ss,
-        miliseconds: ms
+        minutes: minutes,
+        seconds: seconds,
+        miliseconds: miliseconds
       });
     }
   }, {
     key: "print",
     value: function print() {
-      var ms = this.state.miliseconds;
-      var ss = this.state.seconds;
-      var mm = this.state.minutes;
-      return "".concat(this.pad0(mm), ":").concat(this.pad0(ss), ":").concat(this.pad0(ms));
+      var miliseconds = this.state.miliseconds;
+      var seconds = this.state.seconds;
+      var minutes = this.state.minutes;
+      return "".concat(this.pad0(minutes), ":").concat(this.pad0(seconds), ":").concat(this.pad0(miliseconds));
     }
   }, {
     key: "pad0",
@@ -139,7 +149,7 @@ function (_React$Component2) {
       this.setState({
         running: false
       });
-      clearInterval(this.props.watch);
+      clearInterval(this.watch);
     }
   }, {
     key: "reset",
@@ -156,11 +166,12 @@ function (_React$Component2) {
     key: "addResults",
     value: function addResults() {
       if (this.state.running) {
-        var arr = this.state.results;
+        var results = _toConsumableArray(this.state.results);
+
         var lap = this.print();
-        arr.push(lap);
+        results.push(lap);
         this.setState({
-          results: arr
+          results: results
         });
       }
     }

@@ -27,8 +27,8 @@ class App extends React.Component {
 
   start() {
     if (!this.state.running) {
-      this.state.running = true;
-      this.props.watch = setInterval(() => this.step(), 10);
+      this.setState({running: true});
+      this.watch = setInterval(() => this.step(), 10);
     }
   }
 
@@ -39,31 +39,31 @@ class App extends React.Component {
   }
 
   calculate() {
-    let mm = this.state.minutes;
-    let ss = this.state.seconds;
-    let ms = this.state.miliseconds;
-    ms++;
+    let minutes = this.state.minutes;
+    let seconds = this.state.seconds;
+    let miliseconds = this.state.miliseconds;
+    miliseconds++;
 
-    if (ms >= 100) {
-      ss++;
-      ms = 0;
+    if (miliseconds >= 100) {
+      seconds++;
+      miliseconds = 0;
     }
-    if (ss >= 60) {
-      mm++;
-      ss = 0;
+    if (seconds >= 60) {
+      minutes++;
+      seconds = 0;
     }
     this.setState({
-      minutes: mm,
-      seconds: ss,
-      miliseconds: ms
+      minutes: minutes,
+      seconds: seconds,
+      miliseconds: miliseconds
     })
   }
 
   print() {
-    const ms = this.state.miliseconds;
-    const ss = this.state.seconds;
-    const mm = this.state.minutes;
-    return `${this.pad0(mm)}:${this.pad0(ss)}:${this.pad0(ms)}`
+    const miliseconds = this.state.miliseconds;
+    const seconds = this.state.seconds;
+    const minutes = this.state.minutes;
+    return `${this.pad0(minutes)}:${this.pad0(seconds)}:${this.pad0(miliseconds)}`
   }
 
   pad0(value) {
@@ -76,7 +76,7 @@ class App extends React.Component {
 
   stop() {
     this.setState({ running: false });
-    clearInterval(this.props.watch);
+    clearInterval(this.watch);
   }
 
   reset() {
@@ -91,10 +91,10 @@ class App extends React.Component {
 
   addResults() {
     if (this.state.running) {
-      const arr = this.state.results;
+      const results = [...this.state.results];
       const lap = this.print();
-      arr.push(lap);
-      this.setState({ results: arr });
+      results.push(lap);
+      this.setState({ results: results });
     }
   }
 
